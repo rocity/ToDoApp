@@ -5,4 +5,4 @@ class ToDoList(models.Model):
     completed = models.BooleanField(default=False)
 
     def __str__(self):
-        return self.todo_text
+        return '{}'.format(self.todo_text)

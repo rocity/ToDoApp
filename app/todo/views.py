@@ -1,7 +1,8 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.views.decorators.http import require_POST
 from .models import ToDoList
 from .form import TodoForm
+
 
 def index(request):
     todo_list = ToDoList.objects.order_by('-id')
@@ -18,11 +19,10 @@ def addTodo(request):
     return redirect('index')
 
 def completeTodo(request, todo_id):
-    todo = ToDoList.objects.get(pk = todo_id)
+    todo = get_object_or_404(ToDoList, id=todo_id)
     todo.completed = True
     todo.save()
     return redirect('index')
-
 
 def delete_completed(request):
     delete_list = ToDoList.objects.filter(completed__exact = True).delete()
